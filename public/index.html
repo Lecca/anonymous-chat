@@ -5,6 +5,35 @@
 		<link rel="stylesheet" type="text/css" href="css/test.css"> 
 	</head>
 	<body>
-		<h1>FRICK</h1>
+		<script src="/socket.io/socket.io.js"></script>
+		<script>
+			var socket = io();
+		</script>
+		<script>
+			var submitPost = function(msg) {
+				console.log('di');
+				var msgBox = document.getElementById('msgBox');
+				var msgForm = document.getElementById('msgForm');
+				socket.emit('chat message', msgBox.value);
+				msgBox.value = '';
+			}
+		</script>
+		<ul id='chat'>
+			<li>
+				lol
+			</li>
+		</ul>
+		<form id='msgForm' onsubmit="submitPost();return false">
+			<input type='text' name='msg' id='msgBox'>
+			<input type='submit' name='submit' id='submit' value='SEND'>
+		</form>
+		<script>
+			socket.on('chat message', function(msg) {
+				var node = document.createElement('LI');
+				var textnode = document.createTextNode(msg);
+				node.appendChild(textnode);
+				document.getElementById('chat').appendChild(node);
+			});
+		</script>
 	</body>
 </html>
