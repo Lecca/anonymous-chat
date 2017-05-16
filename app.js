@@ -9,7 +9,7 @@ const PORT = 3000;
 app.use(express.static(__dirname + "/public"));
 
 app.get('/', function(req, res) {
-	res.sendFile('main.html', { root: path.join(__dirname, 'public') });
+	res.sendFile('index.html', { root: path.join(__dirname, 'public') });
 });
 
 io.on('connection', function(socket) {
