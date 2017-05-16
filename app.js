@@ -6,11 +6,12 @@ var path = require('path');
 
 const PORT = 3000;
 
-app.use(express.static(__dirname + "/public"));
-
 app.get('/', function(req, res) {
+	console.log('User Requesting Access, IP: ' + req.ip);
 	res.sendFile('index.html', { root: path.join(__dirname, 'public') });
 });
+
+app.use(express.static(__dirname + "/public"));
 
 io.on('connection', function(socket) {
 	console.log('User ' + socket.id + ' Connected');
