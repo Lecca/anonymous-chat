@@ -10,28 +10,31 @@
 			var socket = io();
 		</script>
 		<script>
-			var submitPost = function(msg) {
-				console.log('di');
+			var submitPost = function() {
 				var msgBox = document.getElementById('msgBox');
 				var msgForm = document.getElementById('msgForm');
-				socket.emit('chat message', msgBox.value);
-				msgBox.value = '';
+				var msg = msgBox.value.trim();
+				if (msg) {
+					socket.emit('chat message', socket.id + ' ' + msg);
+					msgBox.value = '';
+				}
 			}
 		</script>
 		<ul id='chat'>
-			<li>
-				lol
-			</li>
+			<div id='chatbg'></div>
 		</ul>
-		<form id='msgForm' onsubmit="submitPost();return false">
-			<input type='text' name='msg' id='msgBox'>
+		<form id='msgForm' onsubmit='submitPost();return false'>
+			<input type='text' name='msg' id='msgBox' autocomplete='off'>
 			<input type='submit' name='submit' id='submit' value='SEND'>
 		</form>
 		<script>
 			socket.on('chat message', function(msg) {
-				var node = document.createElement('LI');
-				var textnode = document.createTextNode(msg);
-				node.appendChild(textnode);
+				var msgStart = msg.indexOf(' ');
+				var user = msg.substring(0, msgStart-1);
+				console.log(user);
+				console.log(msg.substring(msgStart, msg.length));
+				var node = document.createElement('li');
+				node.innerHTML = ("<span class='username'>" + user + "</span>" + msg.substring(msgStart, msg.length));
 				document.getElementById('chat').appendChild(node);
 			});
 		</script>
