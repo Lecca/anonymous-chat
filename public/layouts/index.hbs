@@ -1,0 +1,55 @@
+<!doctype html>
+<html>
+	<head>
+		<title>FRICK</title>
+		<link rel="stylesheet" type="text/css" href="css/style.css"> 
+	</head>
+	<body>
+		<script src="/socket.io/socket.io.js"></script>
+		<script>
+			var socket = io();
+		</script>
+		<script>		
+			var submitPost = function() {
+				var msgBox = document.getElementById('msgBox');
+				var msgForm = document.getElementById('msgForm');
+				var msg = msgBox.value.trim();
+				if (msg) {
+					socket.emit('chat message', socket.id + ' ' + msg);
+					msgBox.value = '';
+				}
+			}
+		</script>
+		<div id='info'>
+			<p id='localIP'>{{ localip }}</p>
+		</div>
+		<nav>
+			<ul id='chat'>
+				<div id='chatbg'></div>
+			</ul>
+		</nav>
+		<form id='msgForm' onsubmit='submitPost();return false'>
+			<input type='text' name='msg' id='msgBox' autocomplete='off'>
+			<input type='submit' name='submit' id='submit' value='SEND'>
+		</form>
+		<script>
+			var chat = document.getElementById('chat');
+			var localIP = document.getElementById('localIP');
+			
+			socket.on('give local ip', function(ip) {
+				localIP.innerHTML = '<b>'+ip+'</b>';
+			});
+		
+			socket.on('chat message', function(msg) {
+				var msgStart = msg.indexOf(' ');
+				var user = msg.substring(0, msgStart-1);
+				console.log(user);
+				console.log(msg.substring(msgStart, msg.length));
+				var node = document.createElement('li');
+				node.innerHTML = ("<span class='username'>" + user + "</span>" + msg.substring(msgStart, msg.length));
+				chat.appendChild(node);
+				chat.scrollTop = chat.scrollHeight;
+			});
+		</script>
+	</body>
+</html>

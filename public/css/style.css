@@ -1,49 +1,86 @@
+html {
+	height: 100%;
+}
+
 body {
+	height: 100%;
+	padding: 0;
+	margin: 0;
 	background-color: #FFCCFF;
-	padding: 0px 0px;
-	margin: 0px 0px;
+	background-image: url('/images/dp.jpg');
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+}
+
+#info {
+	float:left;
+	width: 100%;
+	color: white;
+	background-color: rgba(40, 40, 40, .20);
+	font-weight: 600;
+}
+
+#info p {
+	margin-left: 30px;
 }
 
 #chat {
+	height: 500px;
+	width: 100%;
+	float: left;
 	padding: 12px 0px;
-	background-color: #c6a0c6;
 	list-style: none;
+	overflow: hidden;
+	overflow-y: scroll;
+	background-color: rgba(40, 40, 40, .30);
 }
 
 #chat li {
-	font-family: Arial, Sans-Serif;
-	font-weight: 500;
 	padding: 5px 12px;
 	color: #ffe6ff;
+	font-family: Arial, Sans-Serif;
+	font-weight: 500;
 }
 
 #msgBox {
 	top: 60%;
+	float:left;
 	height: 35px;
 	width: 82.5%;
 	margin-top: 0px;
 	margin-left: 5%;
-	background-color: #1e1e1e;
-	opacity: 0.4;
+	padding: 5px 12px;
 	color: white;
 	font-size: 18px;
+	background-color: rgba(40, 40, 40, .50);
 	border: none;
-	float:left;
-	padding: 5px 12px;
 }
 
 #submit {
-	color: white;
-	border: none;
-	margin: none;
 	width: 5%;
 	height:45px;
+	margin: none;
 	float:left;
-	opacity: .6;
-	background-color: #1e1e1e;
+	color: white;
+	background-color: rgba(40, 40, 40, .60);
+	border: none;
 }
 
 .username {
 	font-weight: 700;
 	color: white;
+}
+
+.link {
+	text-decoration: none;
+	color: #fd628a;
+}
+
+.link:hover {
+	color: #fd4b79;
+}
+
+.ip {
+	color: #fd4b79;
+	font-weight: 900;
 }

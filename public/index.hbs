@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
 	<head>
 		<title>FRICK</title>
@@ -9,7 +9,7 @@
 		<script>
 			var socket = io();
 		</script>
-		<script>
+		<script>		
 			var submitPost = function() {
 				var msgBox = document.getElementById('msgBox');
 				var msgForm = document.getElementById('msgForm');
@@ -20,22 +20,37 @@
 				}
 			}
 		</script>
-		<ul id='chat'>
-			<div id='chatbg'></div>
-		</ul>
+		<div id='info'>
+			<p>Connected to <span class='ip'>{{ localip }}</span></p>
+		</div>
+		<nav>
+			<ul id='chat'>
+				
+			</ul>
+		</nav>
 		<form id='msgForm' onsubmit='submitPost();return false'>
 			<input type='text' name='msg' id='msgBox' autocomplete='off'>
 			<input type='submit' name='submit' id='submit' value='SEND'>
 		</form>
 		<script>
+			var chat = document.getElementById('chat');
+			
+			socket.on('give local ip', function(ip) {
+				localIP.innerHTML = '<b>'+ip+'</b>';
+			});
+		
 			socket.on('chat message', function(msg) {
 				var msgStart = msg.indexOf(' ');
 				var user = msg.substring(0, msgStart-1);
 				console.log(user);
 				console.log(msg.substring(msgStart, msg.length));
 				var node = document.createElement('li');
-				node.innerHTML = ("<span class='username'>" + user + "</span>" + msg.substring(msgStart, msg.length));
-				document.getElementById('chat').appendChild(node);
+				node.innerHTML = ("<span class='username'>" + user + "</span>" + "<span class='msg'>" + msg.substring(msgStart, msg.length)) + " </span>";
+				node.innerHTML = node.innerHTML.replace(/(https?:\/\/[^\s]+)/g, function(url) {
+					return '<a class="link" href="' + url + '">' + url + '</a>';
+				});
+				chat.appendChild(node);
+				chat.scrollTop = chat.scrollHeight;
 			});
 		</script>
 	</body>
