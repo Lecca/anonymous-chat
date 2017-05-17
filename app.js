@@ -3,12 +3,20 @@ var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var path = require('path');
+var hbs = require('express-handlebars');
 
 const PORT = 3000;
 
+app.engine('hbs', hbs({extname: 'hbs', layoutsDir: __dirname + '/public/layouts'}));
+app.set('views', path.join(__dirname, "public"));
+app.set('view engine', 'hbs');
+
+var lan = [];
+
 app.get('/', function(req, res) {
-	console.log('User Requesting Access, IP: ' + req.ip);
-	res.sendFile('index.html', { root: path.join(__dirname, 'public') });
+	var ip =  req.ip;
+	console.log('User Requesting Access, IP: ' + ip);
+	res.render('index', { localip: ip.substring(ip.lastIndexOf(':')+1, ip.length) });
 });
 
 app.use(express.static(__dirname + "/public"));
