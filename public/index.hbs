@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 	<head>
-		<title>FRICK</title>
+		<title>frick</title>
 		<link rel="stylesheet" type="text/css" href="css/style.css"> 
 	</head>
 	<body>
@@ -9,27 +9,37 @@
 		<script>
 			var socket = io();
 		</script>
-		<script>		
+		<script>
 			var submitPost = function() {
 				var msgBox = document.getElementById('msgBox');
 				var msgForm = document.getElementById('msgForm');
 				var msg = msgBox.value.trim();
 				if (msg) {
-					socket.emit('chat message', socket.id + ' ' + msg);
-					msgBox.value = '';
+					if (msg.substring(0, 1) == '/') {
+						var sep = msg.indexOf(' ');
+						var cmd = msg.substring(1, sep > -1 && sep || msg.length);
+						var inp;
+						if (sep > -1) inp = msg.substring(sep, msg.length).trim();
+						if (cmd.toLowerCase() == 'name' && inp) {
+							socket.emit('chat message', '', '< ' + socket.id + ' changed name to ' + inp + ' >');
+							socket.id = inp;
+						}
+						msgBox.value = '';
+					} else {
+						socket.emit('chat message', socket.id, msg);
+						msgBox.value = '';
+					}
 				}
 			}
 		</script>
 		<div id='info'>
 			<p>Connected to <span class='ip'>{{ localip }}</span></p>
 		</div>
-		<nav>
-			<ul id='chat'>
+		<ul id='chat'>
 				
-			</ul>
-		</nav>
+		</ul>
 		<form id='msgForm' onsubmit='submitPost();return false'>
-			<input type='text' name='msg' id='msgBox' autocomplete='off'>
+			<input type='text' name='msg' id='msgBox' autocomplete='off' autofocus>
 			<input type='submit' name='submit' id='submit' value='SEND'>
 		</form>
 		<script>
@@ -39,16 +49,16 @@
 				localIP.innerHTML = '<b>'+ip+'</b>';
 			});
 		
-			socket.on('chat message', function(msg) {
-				var msgStart = msg.indexOf(' ');
-				var user = msg.substring(0, msgStart-1);
-				console.log(user);
-				console.log(msg.substring(msgStart, msg.length));
+			socket.on('chat message', function(usr, msg) {
 				var node = document.createElement('li');
-				node.innerHTML = ("<span class='username'>" + user + "</span>" + "<span class='msg'>" + msg.substring(msgStart, msg.length)) + " </span>";
-				node.innerHTML = node.innerHTML.replace(/(https?:\/\/[^\s]+)/g, function(url) {
-					return '<a class="link" href="' + url + '">' + url + '</a>';
-				});
+				if (usr != '') {
+					node.innerHTML = ("<span class='username'>" + usr + "</span>" + "<span class='msg'> " + msg + " </span>");
+					node.innerHTML = node.innerHTML.replace(/(https?:\/\/[^\s]+)/g, function(url) {
+						return '<a class="link" href="' + url + '">' + url + '</a>';
+					});
+				} else {
+					node.innerHTML = '<span class="alert">'+msg+'</span>';
+				}
 				chat.appendChild(node);
 				chat.scrollTop = chat.scrollHeight;
 			});

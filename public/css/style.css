@@ -1,23 +1,24 @@
 html {
 	height: 100%;
+	overflow: hidden;
 }
 
 body {
 	height: 100%;
 	padding: 0;
 	margin: 0;
-	background-color: #FFCCFF;
-	background-image: url('/images/dp.jpg');
-	background-repeat: no-repeat;
-	background-size: 100% 100%;
+	background-color: #1e1e1e;
+	overflow: hidden;
 }
 
 #info {
 	float:left;
 	width: 100%;
 	color: white;
-	background-color: rgba(40, 40, 40, .20);
+	background-color: rgba(23, 23, 23, 1);
 	font-weight: 600;
+	margin: 0;
+	padding: 0;
 }
 
 #info p {
@@ -25,19 +26,21 @@ body {
 }
 
 #chat {
-	height: 500px;
+	height: 50%;
 	width: 100%;
 	float: left;
-	padding: 12px 0px;
+	padding: 0;
+	margin: 0;
 	list-style: none;
 	overflow: hidden;
 	overflow-y: scroll;
-	background-color: rgba(40, 40, 40, .30);
+	padding-right: 17px;
+	background-color: rgba(23, 23, 23, .5);
 }
 
 #chat li {
 	padding: 5px 12px;
-	color: #ffe6ff;
+	color: white;
 	font-family: Arial, Sans-Serif;
 	font-weight: 500;
 }
@@ -47,22 +50,23 @@ body {
 	float:left;
 	height: 35px;
 	width: 82.5%;
-	margin-top: 0px;
+	margin-top: 10px;
 	margin-left: 5%;
 	padding: 5px 12px;
 	color: white;
 	font-size: 18px;
-	background-color: rgba(40, 40, 40, .50);
+	background-color: rgba(23, 23, 23, .8);
 	border: none;
 }
 
 #submit {
-	width: 5%;
+	width: 75px;
 	height:45px;
 	margin: none;
 	float:left;
 	color: white;
-	background-color: rgba(40, 40, 40, .60);
+	margin-top: 10px;
+	background-color: rgba(23, 23, 23, 1);
 	border: none;
 }
 
@@ -73,14 +77,57 @@ body {
 
 .link {
 	text-decoration: none;
-	color: #fd628a;
+	color: #AB3456;
+	font-weight: 450;
 }
 
 .link:hover {
-	color: #fd4b79;
+	color: #992e4d;
 }
 
 .ip {
 	color: #fd4b79;
 	font-weight: 900;
+}
+
+.alert {
+	color: #fd4b79;
+	font-weight: 600;
+}
+
+.rainbow {
+   /* Chrome, Safari, Opera */
+  -webkit-animation: rainbow 1s infinite; 
+  
+  /* Internet Explorer */
+  -ms-animation: rainbow 1s infinite;
+  
+  /* Standar Syntax */
+  animation: rainbow 1s infinite; 
+}
+
+/* Chrome, Safari, Opera */
+@-webkit-keyframes rainbow{
+	20%{color: red;}
+	40%{color: yellow;}
+	60%{color: green;}
+	80%{color: blue;}
+	100%{color: orange;}	
+}
+/* Internet Explorer */
+@-ms-keyframes rainbow{
+	20%{color: red;}
+	40%{color: yellow;}
+	60%{color: green;}
+	80%{color: blue;}
+	100%{color: orange;}	
+}
+
+/* Standar Syntax */
+@keyframes rainbow{
+	20%{color: red;}
+	40%{color: yellow;}
+	60%{color: green;}
+	80%{color: blue;}
+	100%{color: orange;}	
 }
