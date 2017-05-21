@@ -35,15 +35,20 @@
 		<div id='info'>
 			<p>Connected to <span class='ip'>{{ localip }}</span></p>
 		</div>
-		<ul id='chat'>
-				
-		</ul>
-		<form id='msgForm' onsubmit='submitPost();return false'>
-			<input type='text' name='msg' id='msgBox' autocomplete='off' autofocus>
-			<input type='submit' name='submit' id='submit' value='SEND'>
-		</form>
+		<div class='container'>
+			<div id='chat'>
+				<ul id='chatbox'>
+				</ul>
+			</div>
+			<div>
+				<form id='msgForm' onsubmit='submitPost();return false'>
+					<input type='text' name='msg' id='msgBox' autocomplete='off' autofocus>
+					<input type='submit' name='submit' id='submit' value='SEND'>
+				</form>
+			</div>
+		</div>
 		<script>
-			var chat = document.getElementById('chat');
+			var chat = document.getElementById('chatbox');
 			
 			socket.on('give local ip', function(ip) {
 				localIP.innerHTML = '<b>'+ip+'</b>';
